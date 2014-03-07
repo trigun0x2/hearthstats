@@ -7,6 +7,8 @@ Hearthstats::Application.routes.draw do
 
   get "streams/index"
 
+  resources :coaches
+
 	# match '(*foo)' => 'additional#serverupgrade'
   resources :tournies do
     collection do

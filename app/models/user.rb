@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :arena_runs, dependent: :destroy
   belongs_to :tourny
   has_many :matches, dependent: :destroy
+  has_one :coach, dependent: :destroy
 
   def get_userkey
   	if self.userkey.nil?
