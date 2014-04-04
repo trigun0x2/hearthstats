@@ -36,6 +36,13 @@ class Match < ActiveRecord::Base
     self.patch_id ||= Patch.last.id
   end
 
+  def self.import(file, mode)
+    CSV.foreach(file.path, headers: true) do |row|
+        Match.create! row.to_hash
+        raise
+    end
+  end
+
   def self.bestuserarena(userid)
     class_arena_rate = Hash.new
     (1..Klass.count).each_with_index do |c,i|

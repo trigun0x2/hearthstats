@@ -89,6 +89,11 @@ Hearthstats::Application.routes.draw do
     end
   end
 
+  resources :import do
+    collection do
+      post :constructed
+    end
+  end
   # devise_for :users
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :constructeds do
