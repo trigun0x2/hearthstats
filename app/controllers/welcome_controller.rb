@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
-	caches_action :marreport ,expires_in: 1.day
+	caches_page :marreport ,expires_in: 1.day
 	def index
 		render :layout=>false
 	end

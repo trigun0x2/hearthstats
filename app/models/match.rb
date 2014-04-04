@@ -36,10 +36,25 @@ class Match < ActiveRecord::Base
     self.patch_id ||= Patch.last.id
   end
 
-  def self.import(file, mode)
+  def self.import(file, mode, uid)
     CSV.foreach(file.path, headers: true) do |row|
-        Match.create! row.to_hash
-        raise
+        row = row.to_hash
+        if row["Result"] == "Win"
+          result_id = 1
+        elsif row["Result"] == "Loss"
+          result_id = 2
+        elsif row["Result"] == "Draw"
+          result_id = 3
+        end
+        klass = Klass.find_by_name(row["Class"]).id
+        oppklass = Klass.find_by_name(row["Opponent Class"]).id
+        Match.create! user_id: uid,
+                      klass_id: klass,
+                      oppclass_id: oppklass,
+                      result_id: result_id,
+                      coin: row["Coin"],
+                      created_at: row["Date"],
+                      mode_id: mode
     end
   end
 
@@ -54,10 +69,17 @@ class Match < ActiveRecord::Base
         class_arena_rate[Klass.find(c).name] = 0
       else
         class_arena_rate[Klass.find(c).name] = ((totalwins.to_f / totalgames)*100).round
+      end
   end
-    end
     arena_class = class_arena_rate.max_by {|x,y| y}
 
     arena_class
   end
- end
+
+  private
+
+  def klasses_hash(klass_name)
+    Klass.where(name: klass_name).id
+  end
+
+end
