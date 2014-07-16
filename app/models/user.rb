@@ -51,11 +51,11 @@ class User < ActiveRecord::Base
   end
   
   def name
-    return "You should add method :name in your Messageable model"
+    return profile.name 
   end
   
   def mailboxer_email(object)
-    nil
+    email
   end
 
   def winrate_per_day(days, mode)
@@ -64,5 +64,13 @@ class User < ActiveRecord::Base
   
   def is_new?
     Match.where(user_id: id).count == 0
+  end
+
+  def update_subscription(sub_id)
+    update_attribute(:subscription_id, sub_id)
+  end
+
+  def cancel_subscription
+    update_attribute(:subscription_id, nil)
   end
 end

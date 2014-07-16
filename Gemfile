@@ -23,7 +23,6 @@ group :assets do
 # Gems used only for assets and not required
 # in production environments by default.
   gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
   gem 'turbo-sprockets-rails3'
   gem 'asset_sync'
   gem 'uglifier', '>= 1.0.3'
@@ -90,6 +89,8 @@ gem "delayed_job_web"
 gem 'newrelic_rpm'
 gem 'honeybadger'
 gem 'cindy' # Sendy API
+gem 'stripe'
+gem 'stripe_event'
 
 
 group :test do

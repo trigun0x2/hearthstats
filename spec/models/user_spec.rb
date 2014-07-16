@@ -39,5 +39,24 @@ describe User do
         user.is_new?.should be_false
       end
     end
+
+    describe 'charge methods' do
+        describe '#update_subscription' do
+          it 'should set subscription_id' do
+            user.update_subscription(1)
+
+            user.subscription_id.should == 1
+          end
+        end
+
+        describe '#cancel_subscription' do
+          it 'should set subscription_id to nil' do
+            user.update_subscription(1)
+            user.cancel_subscription
+            
+            user.subscription_id.should == nil
+          end
+        end
+    end
   end
 end
