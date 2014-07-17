@@ -18,25 +18,31 @@ class ChargesController < ApplicationController
       end
 
     rescue Stripe::CardError => e
-      redirect_to new_charges_path, alert: e and return
+      redirect_to charges_path, alert: e and return
     end
-      redirect_to new_charges_path, notice: "Thank you for subscribing!" 
+      redirect_to charges_path, notice: "Thank you for subscribing!" 
   end
 
   def cancel
-    customer = Stripe::Customer.retrieve(current_user.customer_id)
-    unless customer.nil? or customer.respond_to?('deleted')
-      subscription = customer.subscriptions.data[0]
-      if subscription.status == 'active'
-        customer.cancel_subscription
-        current_user.subscription_id = nil
-        current_user.customer_id = nil
-        current_user.save!
+    begin
+      customer = Stripe::Customer.retrieve(current_user.customer_id)
+      unless customer.nil? or customer.respond_to?('deleted')
+        subscription = customer.subscriptions.data[0]
+        if subscription.status == 'active'
+          customer.cancel_subscription
+          current_user.subscription_id = nil
+          current_user.customer_id = nil
+          current_user.save
+        end
       end
-    end
     rescue Stripe::StripeError => e
       logger.error "Stripe Error: " + e.message
       errors.add :base, "Unable to cancel your subscription. #{e.message}."
+      redirect_to charges_path, alert: e and return
+    end
+      redirect_to charges_path, notice: "Sorry to see you go! :("
+  end
 
+  def show
   end
 end

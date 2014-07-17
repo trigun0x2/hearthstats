@@ -1,5 +1,11 @@
 Hearthstats::Application.routes.draw do
 
+  get "premium/index"
+
+  get "premium/query"
+
+  get "premium/videos"
+
   # Gem routes
   #
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -14,6 +20,9 @@ Hearthstats::Application.routes.draw do
   get "cards/index"
   get "streams/index"
 
+  resources :charges do
+    post 'cancel', on: :collection
+  end
   resources :teams
 
   # match '(*foo)' => 'additional#serverupgrade'
