@@ -57,6 +57,7 @@ Hearthstats::Application.routes.draw do
   match "/june", to: "welcome#june_report"
   match "/gen_report", to: "welcome#generate_report"
   get "welcome/ranked_test"
+  get "welcome/select_klass"
 
   # Admin Stats Export
 
@@ -108,6 +109,7 @@ Hearthstats::Application.routes.draw do
   resources :constructeds do
     collection do
       get :stats
+      get :win_rates
     end
   end
 

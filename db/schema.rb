@@ -75,16 +75,16 @@ ActiveRecord::Schema.define(:version => 20140723020834) do
   add_index "arena_runs", ["user_id"], :name => "index_arena_runs_on_user_id"
 
   create_table "arenas", :force => true do |t|
-    t.timestamp "created_at",                      :null => false
-    t.timestamp "updated_at",                      :null => false
-    t.integer   "user_id"
-    t.string    "userclass",    :default => "N/A"
-    t.string    "oppclass",     :default => "N/A"
-    t.boolean   "win",          :default => false
-    t.boolean   "gofirst",      :default => true
-    t.integer   "arena_run_id"
-    t.text      "notes"
-    t.string    "oppname"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.integer  "user_id"
+    t.string   "userclass",    :default => "N/A"
+    t.string   "oppclass",     :default => "N/A"
+    t.boolean  "win",          :default => false
+    t.boolean  "gofirst",      :default => true
+    t.integer  "arena_run_id"
+    t.text     "notes"
+    t.string   "oppname"
   end
 
   add_index "arenas", ["arena_run_id"], :name => "index_arenas_on_arena_run_id"
@@ -113,15 +113,6 @@ ActiveRecord::Schema.define(:version => 20140723020834) do
 
   add_index "cards", ["type_id"], :name => "index_cards_on_type_id"
 
-  create_table "coaches", :force => true do |t|
-    t.integer  "user_id"
-    t.text     "description"
-    t.text     "available"
-    t.boolean  "active",      :default => true
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-  end
-
   create_table "comments", :force => true do |t|
     t.integer  "owner_id",         :null => false
     t.integer  "commentable_id",   :null => false
@@ -132,20 +123,20 @@ ActiveRecord::Schema.define(:version => 20140723020834) do
   end
 
   create_table "constructeds", :force => true do |t|
-    t.timestamp "created_at",                        :null => false
-    t.timestamp "updated_at",                        :null => false
-    t.integer   "user_id"
-    t.string    "deckname"
-    t.string    "oppclass",   :default => "N/A"
-    t.boolean   "win",        :default => false
-    t.boolean   "gofirst",    :default => true
-    t.integer   "deck_id"
-    t.text      "notes"
-    t.string    "rank",       :default => "Casual"
-    t.string    "patch",      :default => "current"
-    t.string    "oppname"
-    t.integer   "ranklvl"
-    t.integer   "legendary"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.integer  "user_id"
+    t.string   "deckname"
+    t.string   "oppclass",   :default => "N/A"
+    t.boolean  "win",        :default => false
+    t.boolean  "gofirst",    :default => true
+    t.integer  "deck_id"
+    t.text     "notes"
+    t.string   "rank",       :default => "Casual"
+    t.string   "patch",      :default => "current"
+    t.string   "oppname"
+    t.integer  "ranklvl"
+    t.integer  "legendary"
   end
 
   add_index "constructeds", ["deck_id"], :name => "index_constructeds_on_deck_id"
@@ -160,9 +151,9 @@ ActiveRecord::Schema.define(:version => 20140723020834) do
   create_table "deck_versions", :force => true do |t|
     t.integer  "deck_id"
     t.text     "notes"
-    t.integer  "version",    :limit => 255
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.integer  "version"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "cardstring"
   end
 
@@ -207,19 +198,19 @@ ActiveRecord::Schema.define(:version => 20140723020834) do
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "impressions", :force => true do |t|
-    t.string    "impressionable_type"
-    t.integer   "impressionable_id"
-    t.integer   "user_id"
-    t.string    "controller_name"
-    t.string    "action_name"
-    t.string    "view_name"
-    t.string    "request_hash"
-    t.string    "ip_address"
-    t.string    "session_hash"
-    t.text      "message"
-    t.text      "referrer"
-    t.timestamp "created_at",          :null => false
-    t.timestamp "updated_at",          :null => false
+    t.string   "impressionable_type"
+    t.integer  "impressionable_id"
+    t.integer  "user_id"
+    t.string   "controller_name"
+    t.string   "action_name"
+    t.string   "view_name"
+    t.string   "request_hash"
+    t.string   "ip_address"
+    t.string   "session_hash"
+    t.text     "message"
+    t.text     "referrer"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   add_index "impressions", ["controller_name", "action_name", "ip_address"], :name => "controlleraction_ip_index"
@@ -228,6 +219,7 @@ ActiveRecord::Schema.define(:version => 20140723020834) do
   add_index "impressions", ["impressionable_type", "impressionable_id", "ip_address"], :name => "poly_ip_index"
   add_index "impressions", ["impressionable_type", "impressionable_id", "request_hash"], :name => "poly_request_index"
   add_index "impressions", ["impressionable_type", "impressionable_id", "session_hash"], :name => "poly_session_index"
+  add_index "impressions", ["impressionable_type", "message", "impressionable_id"], :name => "impressionable_type_message_index", :length => {"impressionable_type"=>nil, "message"=>255, "impressionable_id"=>nil}
   add_index "impressions", ["user_id"], :name => "index_impressions_on_user_id"
 
   create_table "klasses", :force => true do |t|
@@ -337,19 +329,19 @@ ActiveRecord::Schema.define(:version => 20140723020834) do
   end
 
   create_table "profiles", :force => true do |t|
-    t.string    "name"
-    t.string    "bnetid"
-    t.boolean   "private",             :default => false
-    t.timestamp "created_at",                             :null => false
-    t.timestamp "updated_at",                             :null => false
-    t.integer   "user_id"
-    t.integer   "bnetnum",             :default => 0
-    t.string    "time_zone",           :default => "EST"
-    t.string    "avatar_file_name"
-    t.string    "avatar_content_type"
-    t.integer   "avatar_file_size"
-    t.datetime  "avatar_updated_at"
-    t.string    "locale",              :default => "en"
+    t.string   "name"
+    t.string   "bnetid"
+    t.boolean  "private",             :default => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.integer  "user_id"
+    t.integer  "bnetnum",             :default => 0
+    t.string   "time_zone",           :default => "EST"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string   "locale",              :default => "en"
   end
 
   add_index "profiles", ["user_id"], :name => "index_profiles_on_user_id"
@@ -389,17 +381,17 @@ ActiveRecord::Schema.define(:version => 20140723020834) do
   add_index "receipts", ["notification_id"], :name => "index_receipts_on_notification_id"
 
   create_table "redactor_assets", :force => true do |t|
-    t.integer   "user_id"
-    t.string    "data_file_name",                  :null => false
-    t.string    "data_content_type"
-    t.integer   "data_file_size"
-    t.integer   "assetable_id"
-    t.string    "assetable_type",    :limit => 30
-    t.string    "type",              :limit => 30
-    t.integer   "width"
-    t.integer   "height"
-    t.timestamp "created_at",                      :null => false
-    t.timestamp "updated_at",                      :null => false
+    t.integer  "user_id"
+    t.string   "data_file_name",                  :null => false
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.integer  "assetable_id"
+    t.string   "assetable_type",    :limit => 30
+    t.string   "type",              :limit => 30
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   add_index "redactor_assets", ["assetable_type", "assetable_id"], :name => "idx_redactor_assetable"
@@ -460,18 +452,18 @@ ActiveRecord::Schema.define(:version => 20140723020834) do
   end
 
   create_table "tournies", :force => true do |t|
-    t.integer   "challonge_id"
-    t.integer   "status",        :default => 0
-    t.integer   "winner_id"
-    t.string    "prize"
-    t.timestamp "created_at",                       :null => false
-    t.timestamp "updated_at",                       :null => false
-    t.boolean   "complete",      :default => false
-    t.integer   "user_decks_id"
-    t.string    "title"
-    t.string    "desc"
-    t.datetime  "date"
-    t.string    "pic_link"
+    t.integer  "challonge_id"
+    t.integer  "status",        :default => 0
+    t.integer  "winner_id"
+    t.string   "prize"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "complete",      :default => false
+    t.integer  "user_decks_id"
+    t.string   "title"
+    t.string   "desc"
+    t.datetime "date"
+    t.string   "pic_link"
   end
 
   create_table "types", :force => true do |t|
@@ -504,24 +496,23 @@ ActiveRecord::Schema.define(:version => 20140723020834) do
   add_index "unique_decks", ["cardstring"], :name => "index_unique_decks_on_cardstring"
 
   create_table "users", :force => true do |t|
-    t.string    "email",                                 :null => false
-    t.string    "encrypted_password",                    :null => false
-    t.string    "reset_password_token"
-    t.timestamp "reset_password_sent_at"
-    t.timestamp "remember_created_at"
-    t.integer   "sign_in_count",          :default => 0, :null => false
-    t.timestamp "current_sign_in_at"
-    t.timestamp "last_sign_in_at"
-    t.string    "current_sign_in_ip"
-    t.string    "last_sign_in_ip"
-    t.timestamp "created_at",                            :null => false
-    t.timestamp "updated_at",                            :null => false
-    t.integer   "tourny_id"
-    t.boolean   "guest"
-    t.string    "userkey"
-    t.integer   "subscription_id"
-    t.string    "authentication_token"
-    t.string    "customer_id"
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0,  :null => false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.integer  "tourny_id"
+    t.boolean  "guest"
+    t.string   "userkey"
+    t.integer  "subscription_id"
+    t.string   "authentication_token"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -534,5 +525,9 @@ ActiveRecord::Schema.define(:version => 20140723020834) do
   end
 
   add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
+
+  add_foreign_key "notifications", "conversations", name: "notifications_on_conversation_id"
+
+  add_foreign_key "receipts", "notifications", name: "receipts_on_notification_id"
 
 end
