@@ -2,13 +2,10 @@ Hearthstats::Application.routes.draw do
 
   # Gem routes
   #
-  match '/s/:id' => "shortener/shortened_urls#show"
+  get '/s/:id' => "shortener/shortened_urls#show"
 
   # Delayed_job_web
   match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
-
-  opinio_model
-  mount RedactorRails::Engine => '/redactor_rails'
 
   get "cards/index"
   get "streams/index"
@@ -41,35 +38,34 @@ Hearthstats::Application.routes.draw do
 
   post "notifications/note_read"
 
-  opinio_model controller: 'my_comments'
   # get "profile/edit"
 
-  match "/contactus", to: "additional#contactus"
-  match "/aboutus", to: "additional#aboutus"
-  match "/help", to: "additional#help"
-  match "/changelog", to: "additional#changelog"
-  match "/privacy", to: "additional#privacy"
-  match "/news", to: "additional#news"
-  match "/openings", to: "additional#openings"
-  match "/contest", to: "additional#contest_video"
-  match "/league", to: "additional#league"
+  get "/contactus", to: "additional#contactus"
+  get "/aboutus", to: "additional#aboutus"
+  get "/help", to: "additional#help"
+  get "/changelog", to: "additional#changelog"
+  get "/privacy", to: "additional#privacy"
+  get "/news", to: "additional#news"
+  get "/openings", to: "additional#openings"
+  get "/contest", to: "additional#contest_video"
+  get "/league", to: "additional#league"
 
   #apps
-  match "/uploader", to: "additional#uploader"
-  match "/uploader/download/win", to: "additional#uploader_download_win"
-  match "/uploader/download/osx", to: "additional#uploader_download_osx"
+  get "/uploader", to: "additional#uploader"
+  get "/uploader/download/win", to: "additional#uploader_download_win"
+  get "/uploader/download/osx", to: "additional#uploader_download_osx"
 
   # Monthly Reports
-  match '/jan', to: redirect('/reports/jan/index.html')
-  match "/dec", to: "welcome#decreport"
-  match "/nov", to: "welcome#novreport"
-  match "/mar", to: redirect('/reports/mar/index.html')
-  match "/apr", to: "welcome#april_report"
-  match "/may", to: "welcome#may_report"
-  match "/june", to: "welcome#june_report"
-  match "/july", to: "welcome#july_report"
-  match "/aug", to: "welcome#aug_report"
-  match "/gen_report", to: "welcome#generate_report"
+  get '/jan', to: redirect('/reports/jan/index.html')
+  get "/dec", to: "welcome#decreport"
+  get "/nov", to: "welcome#novreport"
+  get "/mar", to: redirect('/reports/mar/index.html')
+  get "/apr", to: "welcome#april_report"
+  get "/may", to: "welcome#may_report"
+  get "/june", to: "welcome#june_report"
+  get "/july", to: "welcome#july_report"
+  get "/aug", to: "welcome#aug_report"
+  get "/gen_report", to: "welcome#generate_report"
   get "welcome/ranked_test"
   get "welcome/select_klass"
 
@@ -77,7 +73,7 @@ Hearthstats::Application.routes.draw do
 
   get "admin/export_arena"
   get "admin/export_con"
-  match "admin/ann", to: "admin#ann"
+  get "admin/ann", to: "admin#ann"
   post "admin/anncreate"
 
   get "welcome/index"
@@ -97,7 +93,6 @@ Hearthstats::Application.routes.draw do
   end
 
   resources :decks do
-    opinio
     collection do
       get 'active_decks'
       get 'public'
@@ -157,7 +152,7 @@ Hearthstats::Application.routes.draw do
     end
   end
   authenticated :user do
-    root to: 'dashboards#index'
+    get '/', to: 'dashboards#index'
   end
 
   devise_scope :user do

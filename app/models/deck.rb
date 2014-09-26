@@ -4,7 +4,6 @@ class Deck < ActiveRecord::Base
 
   acts_as_taggable
   is_impressionable
-  opinio_subjectum
 
   extend FriendlyId
   friendly_id :name, use: :slugged
