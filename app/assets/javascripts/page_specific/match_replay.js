@@ -97,11 +97,7 @@ var LogReplayed = (new function(){
             break;
         }
       })
-      window["hand" + i] = handCards;
-      window["playerBoard" + i] = playerBoard;
-      window["oppBoard" + i] = oppBoard;
-      turnStates.push([eval("hand" + i), eval("playerBoard" + i), eval("oppBoard" + i)]);
-      console.log("hand" + i);
+      turnStates.push([handCards, playerBoard, oppBoard]);
       console.log(turnStates);
     });
   }
