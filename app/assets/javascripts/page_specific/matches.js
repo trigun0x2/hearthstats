@@ -4,7 +4,7 @@ $(document).ready(function(){
     $("#turn" + turn_num).slideToggle();
   });
   $("#open-all").click(function(){
-    $(".action").slideToggle();
+  $(".action").slideToggle();
     if ($(this).html() == "Expand All"){
       newVal = "Collapse All"
     }else{
@@ -12,4 +12,5 @@ $(document).ready(function(){
     }
     $(this).html(newVal);
   });
+
 });

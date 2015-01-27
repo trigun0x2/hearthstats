@@ -2,6 +2,14 @@
 # encoding: utf-8
 module ApplicationHelper
 
+  def card_img(card_name, options = {})
+    options[:src] = path_to_image("cards/" + card_name.parameterize + ".png")
+    options[:alt] = card_name
+    options[:width], options[:height] = extract_dimensions(options.delete(:size)) if options[:size]
+
+    tag("img", options)
+  end
+
   def available_languages
     @available_languages || available_languages_list
   end

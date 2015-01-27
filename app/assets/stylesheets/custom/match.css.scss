@@ -17,3 +17,80 @@
 	}
 }
 
+
+#replay-bg{
+	height: 100%;
+	width: 90%;
+
+	// Shared
+	.hand{
+		position: absolute;
+		height: 20%;
+		img {
+			height: 100%;
+			width: auto;
+		}
+	}
+	.hand img:not(:first-child) {
+	}
+
+	.board{
+		height: 70%;
+		width: 100%;
+	}
+	.grave{
+		width: 20%;
+	}
+	.play-area{
+		margin-top: -3%;
+		width: 80%;
+		height: 100%;
+		img {
+			max-width: 14%;
+			margin-top: -1%;
+		}
+	}
+}
+
+// Turn Container
+#turns-cont{
+	position: fixed;
+	right: 0;
+	top: 0;
+	width: 10%;
+	li{
+		list-style-type: none;
+		width: 100%;
+		text-align: center;
+		padding: 10px;
+		background-color: #2ecc71;
+		border-bottom: 1px solid black;
+		cursor: pointer;
+	}
+	li:hover{
+		background-color: #27ae60;
+	}
+}
+
+// Opponent Side
+#opponent-side{
+	height: 50%;
+	.hand{
+		top: 0;
+		img{
+			margin-top: -20%;
+		}
+	}
+}
+
+// Player Side
+#player-side{
+	height: 50%;
+	.hand{
+		bottom: 0;
+	}
+	img {
+		position: relative;
+		bottom: 0;
+	}
+}

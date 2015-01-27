@@ -1,0 +1,17 @@
+= javascript_include_tag "page_specific/match_replay.js"
+
+p = @match.user_id.to_s + "/id:" + @match.id.to_s
+#replay-bg
+  #opponent-side
+    .hand
+    .board
+      .grave
+      .play-area
+
+  #player-side
+    .hand
+    .board
+      .grave
+      .play-area
+  #turns-cont
+    ul

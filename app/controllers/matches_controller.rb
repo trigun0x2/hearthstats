@@ -77,6 +77,18 @@ class MatchesController < ApplicationController
    end
   end
 
+  def replay
+    @match = Match.find(params[:id])
+    @players = []
+    match_json = JSON.load(open("https://s3-us-west-2.amazonaws.com/hearthstats/prem-logs/124356/3902748"))
+    @players[match_json["firstPlayer"]] = match_json["firstPlayerName"]
+    @players[match_json["secondPlayer"]] = match_json["secondPlayerName"]
+
+    gon.match_json = match_json
+    gon.cards = Card.all
+    render layout: "fullpage"
+  end
+
   def delete_all
     @matches = Match.where(user_id: current_user.id)
     @matches.delete_all
