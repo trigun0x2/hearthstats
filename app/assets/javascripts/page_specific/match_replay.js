@@ -99,6 +99,7 @@ var LogReplayed = (new function(){
             break;
         }
       })
+      
       turnStates.push([handCards.slice(0), playerBoard.slice(0), oppBoard.slice(0)]);
     });
   }
