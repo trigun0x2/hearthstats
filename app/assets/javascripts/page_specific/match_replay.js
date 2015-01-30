@@ -48,7 +48,7 @@ var LogReplayed = (new function(){
     });
   }
 
-  this.drawState = function(turnNum) {
+  function drawState(turnNum) {
     turn = turnStates[turnNum - 1]
     turnHand = turn[0]
     turnBoard = turn[1]
@@ -74,7 +74,7 @@ var LogReplayed = (new function(){
     $(".turn").click(function() {
       turn = parseInt($(this).data("turn"));
       drawState(turn);
-    })
+    });
   }
   function _createTurnState() {
     match_json.turns.splice(0,1);
@@ -89,7 +89,9 @@ var LogReplayed = (new function(){
           case "PLAYED":
           // TODO: Spells not added to board
             if (action.player == player_id){
-              handCards.remove([action.cardId, action.card]);
+              handCards = _(handCards).filter(function(card) {
+                return !_(card).isEqual([action.cardId, action.card]);
+              });
               playerBoard.push([action.cardId, action.card]);
             }else{
               oppBoard.push([action.cardId, action.card]);
@@ -97,12 +99,7 @@ var LogReplayed = (new function(){
             break;
         }
       })
-      window["hand" + i] = handCards;
-      window["playerBoard" + i] = playerBoard;
-      window["oppBoard" + i] = oppBoard;
-      turnStates.push([eval("hand" + i), eval("playerBoard" + i), eval("oppBoard" + i)]);
-      console.log("hand" + i);
-      console.log(turnStates);
+      turnStates.push([handCards.slice(0), playerBoard.slice(0), oppBoard.slice(0)]);
     });
   }
   
@@ -118,17 +115,6 @@ var LogReplayed = (new function(){
   function _drawn(json){
 
   }
-
-  Array.prototype.remove = function() {
-    var what, a = arguments, L = a.length, ax;
-    while (L && this.length) {
-        what = a[--L];
-        while ((ax = this.indexOf(what)) !== -1) {
-            this.splice(ax, 1);
-        }
-    }
-    return this;
-  };
 });
 
 $(document).ready(function(){
